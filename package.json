@@ -1,0 +1,38 @@
+{
+  "name": "lapi-dev",
+  "version": "1.0.0",
+  "description": "Development tools for LAPI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iobox/lapi-dev.git"
+  },
+  "keywords": [
+    "lapi",
+    "dev",
+    "test",
+    "mocha",
+    "chai",
+    "gulp"
+  ],
+  "author": "Long Do <me@dotronglong.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iobox/lapi-dev/issues"
+  },
+  "homepage": "https://github.com/iobox/lapi-dev#readme",
+  "dependencies": {
+    "babel-preset-es2015": "^6.22.0",
+    "chai": "^3.5.0",
+    "cli-color": "^1.2.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-clean": "^0.3.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-mocha": "^4.0.1",
+    "gulp-nodemon": "^2.2.1"
+  }
+}
