@@ -1,6 +1,6 @@
 {
   "name": "lapi-dev",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Development tools for LAPI",
   "main": "index.js",
   "scripts": {
@@ -34,6 +34,10 @@
     "gulp-concat": "^2.6.1",
     "gulp-mocha": "^4.0.1",
     "gulp-nodemon": "^2.2.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "eslint": "^3.3.1",
+    "eslint-config-standard": "^5.3.5",
+    "eslint-plugin-promise": "^2.0.1",
+    "eslint-plugin-standard": "^2.0.0"
   }
 }
