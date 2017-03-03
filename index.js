@@ -132,10 +132,7 @@ var exports = function ($exports) {
 exports($exports);
 
 module.exports = $exports;`
-    const $exports = 'var $exports = ' + JSON.stringify(indexes, null, ' ') + ';' + scripts;
-    var content    = fs.readFileSync(path.join('index.js'), {encoding: 'utf8'});
-    content        = content.replace(/\/\/ AUTO GENERATED ==>((\n.*\n?)*)\/\/ <== AUTO GENERATED/,
-      '// AUTO GENERATED ==>' + "\n" + $exports + "\n" + '// <== AUTO GENERATED');
+    const content = 'var $exports = ' + JSON.stringify(indexes, null, ' ') + ';' + scripts;
     fs.writeFileSync(path.join('index.js'), content, {encoding: 'utf8'});
   });
 
