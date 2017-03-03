@@ -9,7 +9,6 @@ const clc     = require('cli-color');
 const nodemon = require('gulp-nodemon');
 const fs      = require('fs');
 
-const main       = 'index.js';
 const buildDir   = 'build';
 const srcDir     = 'src';
 const testDir    = 'test';
@@ -77,17 +76,6 @@ $exports.registerGulpTasks = function(mochaOptions) {
   gulp.task('watch:build', ['build'], function () {
     gulp.watch([].concat(sources, tests), ['build']);
   });
-  gulp.task('server', ['build:src'], function () {
-    nodemon({
-      script: path.join(buildDir, srcDir, 'index.js'),
-      ext: 'js',
-      ignore: ['gulpfile.js'].concat(buildFiles, tests, dists),
-      env: {
-        'NODE_ENV': 'development'
-      },
-      tasks: ['build:src']
-    });
-  });
   gulp.task('indexing', function () {
     var indexes     = {}, stats, ignore = [path.join(srcDir, 'index.js')];
     const readDir   = function (dir) {
@@ -114,7 +102,7 @@ $exports.registerGulpTasks = function(mochaOptions) {
         }
 
         if (part.match(/(\.js)$/)) {
-          part = require('./' + path.join.apply(null, parts)).default.name;
+          part = require('../../' + path.join.apply(null, parts)).default.name;
           parts[0] = '';
           node[part] = path.join.apply(null, parts);
         } else if (node[part.toLowerCase()] === undefined) {
@@ -125,12 +113,33 @@ $exports.registerGulpTasks = function(mochaOptions) {
     };
     readDir(srcDir);
 
-    const $exports = 'var $exports = ' + JSON.stringify(indexes, null, ' ') + ';';
+    const scripts = `
+const distDir = 'dist';
+function include(file, name) {
+  const pkg = require('./' + distDir + '/' + file);
+  return name === undefined ? pkg.default : pkg[name];
+}
+
+var exports = function ($exports) {
+  Object.keys($exports).forEach(function (name) {
+    if (typeof $exports[name] === 'object') {
+      exports($exports[name])
+    } else {
+      $exports[name] = include($exports[name])
+    }
+  });
+};
+exports($exports);
+
+module.exports = $exports;`
+    const $exports = 'var $exports = ' + JSON.stringify(indexes, null, ' ') + ';' + scripts;
     var content    = fs.readFileSync(path.join('index.js'), {encoding: 'utf8'});
     content        = content.replace(/\/\/ AUTO GENERATED ==>((\n.*\n?)*)\/\/ <== AUTO GENERATED/,
       '// AUTO GENERATED ==>' + "\n" + $exports + "\n" + '// <== AUTO GENERATED');
     fs.writeFileSync(path.join('index.js'), content, {encoding: 'utf8'});
   });
+
+  gulp.task('deploy', ['build', 'indexing']);
 };
 
 module.exports = $exports;
