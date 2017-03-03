@@ -1,6 +1,6 @@
 {
   "name": "lapi-dev",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Development tools for LAPI",
   "main": "index.js",
   "scripts": {
@@ -33,6 +33,7 @@
     "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.1",
     "gulp-mocha": "^4.0.1",
-    "gulp-nodemon": "^2.2.1"
+    "gulp-nodemon": "^2.2.1",
+    "path": "^0.12.7"
   }
 }
