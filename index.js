@@ -32,8 +32,12 @@ $exports.registerGulpTasks = function (mochaOptions) {
     return gulp.src(path.join(buildDir, testDir), {read: false})
       .pipe(clean());
   });
+  gulp.task('clean:dist', function () {
+    return gulp.src(path.join(distDir), {read: false})
+      .pipe(clean());
+  });
 
-  gulp.task('build', ['build:src', 'build:test']);
+  gulp.task('build', ['build:src', 'build:test', 'clean:dist']);
   gulp.task('build:src', ['clean:src'], function () {
     return gulp.src(sources)
       .pipe(babel())
