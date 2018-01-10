@@ -128,10 +128,10 @@ $exports.registerGulpTasks = function (mochaOptions) {
 
     const id = genId(16);
     const scripts = `
-const publish = function ($object) {
+var publish = function ($object) {
   Object.keys($object).forEach(function($key) {
     if (typeof $object[$key] === 'string') {
-      let pkg = require('./dist/' + $object[$key]);
+      var pkg = require('./dist/' + $object[$key]);
       $object[$key] = typeof pkg.default !== 'undefined' ? pkg.default : pkg;
     } else if (typeof $object[$key] === 'object') {
       $object[$key] = publish($object[$key])
@@ -141,7 +141,7 @@ const publish = function ($object) {
   return $object;
 };
 module.exports = publish(${id});`
-    const content = 'let ' + id + ' = ' + JSON.stringify(indexes, null, ' ') + ';' + scripts;
+    const content = 'var ' + id + ' = ' + JSON.stringify(indexes, null, ' ') + ';' + scripts;
     fs.writeFileSync(path.join('index.js'), content, {encoding: 'utf8'});
   });
 
