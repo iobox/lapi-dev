@@ -117,6 +117,16 @@ $exports.registerGulpTasks = function (mochaOptions) {
     };
     readDir(srcDir);
 
+    const genId = function(length) {
+      let text = '';
+      const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      for (let i = 0; i < length; i++) {
+        text += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return text;
+    };
+
+    const id = genId(16);
     const scripts = `
 const publish = function ($object) {
   Object.keys($object).forEach(function($key) {
@@ -130,8 +140,8 @@ const publish = function ($object) {
   
   return $object;
 };
-module.exports = publish($module);`
-    const content = 'let $module = ' + JSON.stringify(indexes, null, ' ') + ';' + scripts;
+module.exports = publish(${id});`
+    const content = 'let ' + id + ' = ' + JSON.stringify(indexes, null, ' ') + ';' + scripts;
     fs.writeFileSync(path.join('index.js'), content, {encoding: 'utf8'});
   });
 
