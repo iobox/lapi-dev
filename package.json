@@ -1,6 +1,6 @@
 {
   "name": "lapi-dev",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Development tools for LAPI",
   "main": "index.js",
   "scripts": {
